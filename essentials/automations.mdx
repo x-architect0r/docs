@@ -1,0 +1,194 @@
+---
+title: 'Automations'
+description: 'Set up smart automations that execute based on time, price, or on-chain events. Let Buildr handle your trading strategy 24/7.'
+icon: 'robot'
+---
+
+## Overview
+
+Buildr can execute actions automatically based on various triggers. From scheduled buys to complex on-chain event responses, automate your strategy without constant monitoring.
+
+<Note>
+Automations run on Buildr's secure infrastructure and execute through your wallet only when conditions are met.
+</Note>
+
+## Time-Based Triggers
+
+### Scheduled Actions
+<CodeGroup>
+```bash Basic Scheduling
+"Buy 0.1 BNB of PEPE every day at 14:00 UTC"
+"Sell 10% of my portfolio every Sunday"
+"Check holder count daily at midnight"
+```
+
+```bash Advanced Timing
+"Execute strategy:
+- Buy 0.05 BNB of FLOKI Mon/Wed/Fri at 15:00
+- Sell if profit > 20%
+- Stop if loss > 5%"
+```
+</CodeGroup>
+
+<Warning>
+Ensure sufficient funds in your wallet for scheduled transactions, including gas fees.
+</Warning>
+
+## Price Triggers
+
+### Market Conditions
+<CodeGroup>
+```bash Price Alerts
+"Alert when BNB drops below $200"
+"Notify if PEPE pumps 20% in 1 hour"
+"Watch 0x123...abc for price movement >5%"
+```
+
+```bash Auto-Trading
+"When FLOKI hits $0.0001:
+- Buy 1 BNB worth
+- Set stop loss at -5%
+- Take profit at +15%"
+```
+</CodeGroup>
+
+## On-Chain Triggers
+
+### Contract Events
+<CodeGroup>
+```bash Liquidity Events
+"Alert when new LP added to 0x123...abc"
+"Buy if liquidity increases >$100K"
+"Notify on large LP removals"
+```
+
+```bash Trading Events
+"Monitor whale movements:
+- Alert on buys >$50K
+- Track wallet 0xabc if active
+- Notify on >1% token transfers"
+```
+</CodeGroup>
+
+### Smart Reactions
+<CodeGroup>
+```bash Auto Response
+"If wallet 0xabc buys:
+- Wait 30 seconds
+- Buy 0.5 BNB worth
+- Set 10% take profit"
+```
+
+```bash Complex Logic
+"Create strategy:
+- Monitor top 10 wallets
+- If 3+ buy within 5 minutes
+- Buy 0.1 BNB
+- Sell after 2x or 1 hour"
+```
+</CodeGroup>
+
+## Volume & Trading Triggers
+
+### Market Activity
+<CodeGroup>
+```bash Volume Alerts
+"Alert when 24h volume > $1M"
+"Notify if buy pressure > 70%"
+"Track sudden volume spikes"
+```
+
+```bash Trading Patterns
+"Monitor PEPE for:
+- Volume 3x above average
+- Buy/sell ratio > 2
+- Holder growth >10%"
+```
+</CodeGroup>
+
+## Managing Automations
+
+### Control Commands
+<CodeGroup>
+```bash Basic Management
+"Show my active automations"
+"Pause all triggers"
+"Delete PEPE price alert"
+```
+
+```bash Advanced Control
+"Update FLOKI strategy:
+- Increase buy amount to 2 BNB
+- Adjust stop loss to -7%
+- Add secondary take profit at 30%"
+```
+</CodeGroup>
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion icon="gear" title="Setup Tips">
+    - Start with small amounts to test automations
+    - Use specific token addresses for reliability
+    - Set reasonable trigger conditions
+    - Include stop losses for safety
+  </Accordion>
+  
+  <Accordion icon="chart-line" title="Strategy Design">
+    - Combine multiple conditions for precision
+    - Account for gas fees in profit calculations
+    - Consider market volatility in timing
+    - Test strategies with small amounts first
+  </Accordion>
+  
+  <Accordion icon="shield" title="Safety Measures">
+    - Set maximum transaction limits
+    - Use price impact restrictions
+    - Include timeout conditions
+    - Monitor automation performance
+  </Accordion>
+</AccordionGroup>
+
+## Advanced Features
+
+<CardGroup>
+  <Card
+    title="Multi-Condition Triggers"
+    icon="code-branch"
+  >
+    Combine time, price, and on-chain conditions for sophisticated strategies
+  </Card>
+  
+  <Card
+    title="Chain Reactions"
+    icon="diagram-project"
+  >
+    Create sequences of actions that trigger based on previous results
+  </Card>
+  
+  <Card
+    title="Risk Management"
+    icon="shield-halved"
+  >
+    Implement automated stop losses and position sizing
+  </Card>
+  
+  <Card
+    title="Performance Analytics"
+    icon="chart-mixed"
+  >
+    Track and analyze your automation performance
+  </Card>
+</CardGroup>
+
+<Warning>
+**Important Safety Notes:**
+- Always set maximum spending limits
+- Include stop-loss conditions
+- Monitor automation performance
+- Test with small amounts first
+</Warning>
+
+<Note>
+Need help with automations? Contact us via [Email](mailto:team@buildr.bot) for support and strategy discussions.
+</Note>

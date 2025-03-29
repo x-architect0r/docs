@@ -1,33 +1,56 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'API documentation for Buildr AI agents'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  🚧 Buildr Agent API is currently in beta. Expect breaking changes and limited functionality as we improve stability and expand coverage.
 </Note>
 
-## Welcome
+## Welcome to the Buildr Agent API
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+The Buildr Agent API lets you interact programmatically with your on-chain AI companion. You can launch tokens, initiate swaps, track market actions, and automate BNB Chain operations — all through simple, AI-powered API calls.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+Whether you're integrating Buildr into a dashboard, scripting DeFi automations, or building custom workflows, this API gives you full control with minimal complexity.
+
+<CardGroup>
+  <Card
+    title="Chat Completions"
+    icon="comment"
+    href="/api-reference/chat-completions"
+  >
+    Send natural language commands to your AI agent
+  </Card>
+
+  <Card
+    title="Get Agent"
+    icon="circle-info"
+    href="/api-reference/agent"
+  >
+    Retrieve details of an existing AI agent
+  </Card>
+
+  <Card
+    title="Create Agent"
+    icon="plus"
+    href="/api-reference/create"
+  >
+    Create a new AI agent with custom capabilities
+  </Card>
+
+  <Card
+    title="Delete Agent"
+    icon="trash"
+    href="/api-reference/delete"
+  >
+    Remove an existing AI agent
+  </Card>
+</CardGroup>
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All endpoints require Bearer token authentication. Include your API token in the Authorization header like so:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+Authorization: Bearer YOUR_API_KEY
 ```

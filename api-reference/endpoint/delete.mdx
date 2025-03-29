@@ -1,4 +1,56 @@
 ---
-title: 'Delete Plant'
-openapi: 'DELETE /plants/{id}'
+title: 'Delete Agent'
+api: 'DELETE /delete-agent/{id}'
+description: 'Delete an existing AI agent'
 ---
+
+Delete an existing Buildr AI agent by its ID. This action is irreversible - once an agent is deleted, all its configurations and history will be removed.
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The unique identifier of the agent to delete
+</ParamField>
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the deletion was successful
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A message describing the result of the operation
+</ResponseField>
+
+### Error Codes
+
+<ResponseField name="404" type="object">
+  Returned when the specified agent ID is not found
+</ResponseField>
+
+<ResponseField name="400" type="object">
+  Returned when the request is invalid (e.g., missing or invalid ID)
+</ResponseField>
+
+<RequestExample>
+```bash
+curl -X DELETE 'https://api.buildr.bot/delete-agent/12345' \
+  -H 'Authorization: Bearer YOUR_API_KEY'
+```
+</RequestExample>
+
+<ResponseExample>
+```json Success
+{
+  "success": true,
+  "message": "Agent deleted successfully"
+}
+```
+
+```json Error (404)
+{
+  "error": 404,
+  "message": "Agent not found"
+}
+```
+</ResponseExample>

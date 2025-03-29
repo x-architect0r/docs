@@ -1,4 +1,119 @@
 ---
-title: 'Create Plant'
-openapi: 'POST /plants'
+title: 'Create Agent'
+api: 'POST /create-agent'
+description: 'Create a new AI agent with specified capabilities and triggers'
 ---
+
+Create a new Buildr AI agent that can automate DeFi operations based on your specifications. Each agent can be configured with specific triggers and actions to execute your desired trading strategies.
+
+### Body Parameters
+
+<ParamField body="name" type="string" required>
+  The name of your agent
+</ParamField>
+
+<ParamField body="type" type="string" required>
+  Type of agent. Can be one of: `DeFi`, `NFT`, `Social`, `Trading`
+</ParamField>
+
+<ParamField body="description" type="string">
+  A detailed description of what the agent does
+</ParamField>
+
+<ParamField body="triggers" type="array">
+  Conditions that activate the agent
+  ```json
+  {
+    "type": "price | time | volume | onchain",
+    "condition": "string",
+    "parameters": {
+      // Trigger-specific parameters
+    }
+  }
+  ```
+</ParamField>
+
+<ParamField body="actions" type="array">
+  Actions the agent performs when triggered
+  ```json
+  {
+    "type": "swap | transfer | deploy | monitor",
+    "parameters": {
+      // Action-specific parameters
+    }
+  }
+  ```
+</ParamField>
+
+### Response
+
+<ResponseField name="id" type="integer">
+  Unique identifier for the created agent
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Name of the agent
+</ResponseField>
+
+<ResponseField name="type" type="string">
+  Type of the agent
+</ResponseField>
+
+<RequestExample>
+```json
+{
+  "name": "TradingBot",
+  "type": "Trading",
+  "description": "Automated trading bot for BSC tokens",
+  "triggers": [
+    {
+      "type": "price",
+      "condition": "price_change",
+      "parameters": {
+        "threshold": "10%",
+        "timeframe": "1h"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "type": "swap",
+      "parameters": {
+        "maxSlippage": "1%",
+        "gasSpeed": "fast"
+      }
+    }
+  ]
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json
+{
+  "id": 12345,
+  "name": "TradingBot",
+  "type": "Trading",
+  "description": "Automated trading bot for BSC tokens",
+  "triggers": [
+    {
+      "type": "price",
+      "condition": "price_change",
+      "parameters": {
+        "threshold": "10%",
+        "timeframe": "1h"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "type": "swap",
+      "parameters": {
+        "maxSlippage": "1%",
+        "gasSpeed": "fast"
+      }
+    }
+  ]
+}
+```
+</ResponseExample> 

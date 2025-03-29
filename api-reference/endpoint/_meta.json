@@ -1,0 +1,6 @@
+{
+  "chat-completions": "Chat Completions",
+  "create": "Create Agent",
+  "agent": "Get Agent",
+  "delete": "Delete Agent"
+} 

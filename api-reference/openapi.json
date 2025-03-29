@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "Buildr API",
+    "description": "API specification for Buildr - an AI-powered DeFi agent platform that enables natural language interactions with blockchain protocols",
     "license": {
       "name": "MIT"
     },
@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://api.buildr.bot"
     }
   ],
   "security": [
@@ -19,36 +19,34 @@
     }
   ],
   "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+    "/chat-completions": {
+      "post": {
+        "summary": "Chat Completions",
+        "description": "Sends a message to Buildr Agent and returns the response.",
+        "operationId": "createChatCompletion",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Successful chat response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
+                  "$ref": "#/components/schemas/ChatResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Unexpected error",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
@@ -57,34 +55,43 @@
               }
             }
           }
-        }
-      },
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/create-agent": {
       "post": {
-        "description": "Creates a new plant in the store",
+        "tags": ["Agent"],
+        "summary": "Create Agent",
+        "description": "Create a new AI agent with specified capabilities and triggers",
+        "operationId": "createAgent",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/NewAgent"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Agent created successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/Agent"
                 }
               }
             }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
@@ -96,14 +103,17 @@
         }
       }
     },
-    "/plants/{id}": {
+    "/delete-agent/{id}": {
       "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+        "tags": ["Agent"],
+        "summary": "Delete Agent",
+        "description": "Delete an existing AI agent by its ID",
+        "operationId": "deleteAgent",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "ID of plant to delete",
+            "description": "ID of agent to delete",
             "required": true,
             "schema": {
               "type": "integer",
@@ -112,12 +122,88 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
+          "200": {
+            "description": "Agent deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/{id}": {
+      "get": {
+        "tags": ["Agent"],
+        "summary": "Get Agent",
+        "description": "Retrieve details of an existing AI agent by its ID",
+        "operationId": "getAgent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of agent to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
@@ -130,65 +216,202 @@
       }
     }
   },
-  "webhooks": {
-    "/plant/webhook": {
-      "post": {
-        "description": "Information about a new plant added to the store",
-        "requestBody": {
-          "description": "Plant added to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
-          }
-        }
-      }
-    }
-  },
   "components": {
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
+      "ChatRequest": {
+        "type": "object",
+        "required": ["messages"],
+        "properties": {
+          "messages": {
+            "type": "array",
+            "description": "The conversation messages to send to Buildr Agent.",
+            "items": {
+              "type": "object",
+              "required": ["role", "content"],
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "description": "The role of the message sender",
+                  "enum": ["system", "user", "assistant"]
+                },
+                "content": {
+                  "type": "string",
+                  "description": "The message content"
+                }
+              }
+            }
+          },
+          "model": {
+            "type": "string",
+            "description": "The model to use for chat completion",
+            "example": "gpt-4"
+          },
+          "context": {
+            "type": "string",
+            "description": "Optional context for the agent (e.g., 'user wants to swap tokens')."
+          }
+        },
+        "examples": [
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "How do I swap 0.1 BNB to MUBARAK?"
+              }
+            ],
+            "model": "gpt-4",
+            "context": "user wants to swap tokens"
+          },
+          {
+            "messages": [
+              {
+                "role": "system",
+                "content": "You are a helpful trading assistant."
+              },
+              {
+                "role": "user",
+                "content": "What's the current price of MUBARAK?"
+              }
+            ],
+            "model": "gpt-4"
+          }
+        ]
+      },
+      "ChatResponse": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
+          "reply": {
+            "type": "string",
+            "description": "The response generated by the Buildr Agent."
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
+      "Agent": {
+        "type": "object",
+        "required": ["name", "type"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier for the agent"
           },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
+          "name": {
+            "type": "string",
+            "description": "The name of the agent"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of agent",
+            "enum": ["DeFi", "NFT", "Social", "Trading"]
+          },
+          "description": {
+            "type": "string",
+            "description": "A detailed description of what the agent does"
+          },
+          "networks": {
+            "type": "array",
+            "description": "List of blockchain networks the agent operates on",
+            "items": {
+              "type": "string"
+            }
+          },
+          "triggers": {
+            "type": "array",
+            "description": "Conditions that activate the agent",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["price", "time", "volume", "onchain"]
+                },
+                "condition": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "actions": {
+            "type": "array",
+            "description": "Actions the agent performs when triggered",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["swap", "transfer", "deploy", "monitor"]
+                },
+                "parameters": {
+                  "type": "object"
+                }
               }
             }
           }
-        ]
+        }
+      },
+      "NewAgent": {
+        "type": "object",
+        "required": ["name", "type"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the agent"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of agent",
+            "enum": ["DeFi", "NFT", "Social", "Trading"]
+          },
+          "description": {
+            "type": "string",
+            "description": "A detailed description of what the agent does"
+          },
+          "networks": {
+            "type": "array",
+            "description": "List of blockchain networks the agent operates on",
+            "items": {
+              "type": "string"
+            }
+          },
+          "triggers": {
+            "type": "array",
+            "description": "Conditions that activate the agent",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["price", "time", "volume", "onchain"]
+                },
+                "condition": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "actions": {
+            "type": "array",
+            "description": "Actions the agent performs when triggered",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["swap", "transfer", "deploy", "monitor"]
+                },
+                "parameters": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
       },
       "Error": {
         "required": [

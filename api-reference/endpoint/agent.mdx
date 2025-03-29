@@ -1,0 +1,93 @@
+---
+title: 'Get Agent'
+api: 'GET /agent/{id}'
+description: 'Retrieve details of an existing AI agent'
+---
+
+Retrieve detailed information about an existing Buildr AI agent by its ID. This endpoint returns the complete configuration of the agent, including its triggers and actions.
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The unique identifier of the agent to retrieve
+</ParamField>
+
+### Response
+
+<ResponseField name="id" type="integer">
+  Unique identifier of the agent
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Name of the agent
+</ResponseField>
+
+<ResponseField name="type" type="string">
+  Type of the agent (DeFi, NFT, Social, or Trading)
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  Detailed description of what the agent does
+</ResponseField>
+
+<ResponseField name="triggers" type="array">
+  List of conditions that activate the agent
+</ResponseField>
+
+<ResponseField name="actions" type="array">
+  List of actions the agent performs when triggered
+</ResponseField>
+
+### Error Codes
+
+<ResponseField name="404" type="object">
+  Returned when the specified agent ID is not found
+</ResponseField>
+
+<ResponseField name="400" type="object">
+  Returned when the request is invalid (e.g., invalid ID format)
+</ResponseField>
+
+<RequestExample>
+```bash
+curl -X GET 'https://api.buildr.bot/agent/12345' \
+  -H 'Authorization: Bearer YOUR_API_KEY'
+```
+</RequestExample>
+
+<ResponseExample>
+```json
+{
+  "id": 12345,
+  "name": "TradingBot",
+  "type": "Trading",
+  "description": "Automated trading bot for BSC tokens",
+  "triggers": [
+    {
+      "type": "price",
+      "condition": "price_change",
+      "parameters": {
+        "threshold": "10%",
+        "timeframe": "1h"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "type": "swap",
+      "parameters": {
+        "maxSlippage": "1%",
+        "gasSpeed": "fast"
+      }
+    }
+  ]
+}
+```
+
+```json Error (404)
+{
+  "error": 404,
+  "message": "Agent not found"
+}
+```
+</ResponseExample> 
