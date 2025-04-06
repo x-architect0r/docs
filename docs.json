@@ -19,7 +19,8 @@
               "introduction",
               "quickstart",
               "architecture",
-              "tokenomics"
+              "tokenomics",
+              "roadmap"
             ]
           },
           {
@@ -56,8 +57,8 @@
     "global": {
       "anchors": [
         {
-          "anchor": "X - Twitter",
-          "href": "https://mintlify.com/docs",
+          "anchor": "Updates",
+          "href": "https://x.com/buildr_bot",
           "icon": "x-twitter"
         }
       ]
@@ -83,7 +84,7 @@
   "footer": {
     "socials": {
       "x": "https://x.com/buildr_bot",
-      "github": "https://github.com/mintlify"
+      "telegram": "https://t.me/buildr_bnb"
     }
   }
 }
